@@ -1,5 +1,6 @@
 # Particle-based model of turbulent microphysics in the MTU Pi Chamber
 Author: Laura Fierce
+
 Conributors: Jesse Anderson and Payton Beeler
 
   * Models fluctuations in temperature and supersaturation due to turbulent flow within clouds.
