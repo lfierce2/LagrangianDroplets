@@ -3,7 +3,8 @@
 """
 Created on Thu Apr 21 19:08:29 2022
 
-@author: fier887
+@author: Laura Fierce
+
 """
 
 import microphysics
