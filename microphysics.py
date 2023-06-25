@@ -3,7 +3,9 @@
 """
 Created on Thu Apr 21 19:06:25 2022
 
-@author: fier887
+@author: Laura Fierce
+
+Many of the functions in this file were pulled from Pyrcel: https://pyrcel.readthedocs.io/en/latest/
 """
 
 
