@@ -1,10 +1,11 @@
-#!/usr/bin/env python
-# coding: utf-8
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Apr 21 19:06:25 2022
 
-# # Script to read in read in Virtual data from Pi Chamber LES
-# ## Import dependencies
+@author:  Jesse Anderson and Laura Fierce
 
-# In[1]:
+"""
 
 import numpy as np
 import pickle
@@ -17,21 +18,8 @@ import matplotlib.pyplot as plt
 
 def trajectories(num_trajectories, stop_time=0, num_start=0,LES_dir='OUT_3D/',parcel_trace_dir='parcel_traces/',timesteps = range(90000,180000,3601)):
     
-    # if (t_stop>60.0):
-    #     print("ERROR: STOP TIME MUST BE <= 60 SECONDS")
-    #     sys.exit()
-    
-    # ## file directory
-    # # file_dir = os.getcwd()+'/OUT_3D/' ## Current working directory
-    
-    # print('Reading LES output...')
-    # print('\n')
-    
-    # timesteps = range(90000,180000,25)
     time_grid = np.zeros(len(timesteps))
     for tt,timestep in enumerate(timesteps):
-        ## Load the variable from the LES output
-        # filename = LES_dir+'PiChamber_huji_19K_surfmod_trj_32_000009'+str(ii).zfill(4)+'.nc'
         filename = LES_dir+'PiChamber_huji_19K_trj_32_' + str(int(timestep)).zfill(10)+'.nc'
         
         LES_array = Dataset(filename)
@@ -70,8 +58,9 @@ def trajectories(num_trajectories, stop_time=0, num_start=0,LES_dir='OUT_3D/',pa
     interpolate_T = RegularGridInterpolator((X_grid, Y_grid, Z_grid, time_grid), Tabs.T)
     interpolate_Qv = RegularGridInterpolator((X_grid, Y_grid, Z_grid, time_grid), Qv.T)
     
-    # dt = (time_grid[-1] - time_grid[0])/(num_trajectories-1)
+    
     dt = (time_grid[1] - time_grid[0])/(num_trajectories-1)
+    
     # # Solve the ODE, t_span is the timespan of the simulation
     for aa in range(num_start,num_trajectories):
         
