@@ -3,7 +3,7 @@
 """
 Created on Tue Aug  9 09:37:27 2022
 
-@author: fier887
+@author: Laura Fierce
 """
 import matplotlib.pyplot as plt
 import pickle
@@ -16,10 +16,6 @@ import scipy.constants as c
 import random
 
 
-# def timeseries():
-#     fig, ax = plt.subplots(3)
-#     fig.set_size_inches(3.5,6)
-#     return hfigs, haxs1, haxs2
 M_dry_air = 28.9647/1000. # kg/mol
 M_h2o = 18./1000.
 M_co2 = 44./1000.
@@ -86,24 +82,11 @@ def plot_some_trajectories(parcel_nums,output_dir,avg_SS=0.,Slims=[-10,10],Dlims
             ax3.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
             ax3.yaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
             ax3.zaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
-            # ax3.xaxis.set_pane_color((1.0, 1.0, 1.0, 0.0))
-            # ax3.yaxis.set_color((1.0, 1.0, 1.0, 0.0))
-            # ax3.zaxis.set_color((1.0, 1.0, 1.0, 0.0))
-
-            # ax3.patch.set_facecolor('none')
-            # ax3.patch.set_edgecolor('none')            
             
             ax3 = plot_spatial_trajectory(parcel_num,parcel_trace_dir,ax3)
-            # ax3.zaxis.set_visible(False)
-            
-            # ax3.patch.set_facecolor('white')
-            # ax3.patch.set_alpha(1.0)
-            # print(little_ax_position)
-            
-#    ax2.set_yscale('log')
-#    ax.yaxis.grid(color='lightgray', linestyle='dashed')
+
     plt.tight_layout()
-    fig.savefig(plot_dir + 'trajectories.png',dpi=1000)
+    fig.savefig(plot_dir + 'trajectories.pdf',dpi=1000)
     # plt.show()
     if add_spatial_trajectories:
         return fig,ax1,ax2,ax3
@@ -111,36 +94,17 @@ def plot_some_trajectories(parcel_nums,output_dir,avg_SS=0.,Slims=[-10,10],Dlims
         return fig,ax1,ax2
 
 def plot_spatial_trajectory(parcel_num,parcel_trace_dir,ax):
-    # print('parcel_num',parcel_num)
-#for part_id in particle_traces.keys():
-#    parcel_num = particle_traces[part_id]['trajectory_id']
     trajectory = run.read_parcel_trace(parcel_num,parcel_trace_dir = parcel_trace_dir)
-#    particle_trace = run.read_particle_trace(ii,particle_trace_dir)
-    # Data for a three-dimensional line
+    
     xdata = trajectory['x']
     ydata = trajectory['y']
     zdata = trajectory['z']
-    # fig = plt.figure(figsize=[2.5,2.5])
-    # ax = plt.axes(projection='3d')    
-    ax.plot3D(xdata, ydata, zdata, 'gray')
-    # if not cvar == None:
-    #     cdata = trajectory[cvar]
-    #     ax.scatter3D(xdata, ydata, zdata, c=cdata);
     
-#    plt.title('particle '+str(part_id)+ ', trajectory '+ str(parcel_num))
-#    plt.title('trajectory '+ str(parcel_num))
+    ax.plot3D(xdata, ydata, zdata, 'gray')
+    
     ax.set_xlim([0.,2.])
     ax.set_ylim([0.,2.])        
     ax.set_zlim([0.,1.])
-    # ax.set_xlabel('X [m]')
-    # ax.set_ylabel('Y [m]')
-    # ax.set_zlabel('Z [m]')
-    # plt.show()
-    # filename = plot_dir + '/activated_fraction_mean_SS.png'
-    # plt.tight_layout()
-    # fig.savefig(filename,dpi=1000)
-    
-    # return fig,ax
 
 def plot_activated_fraction_mean_SS(avg_SS, output_dir,plot_dir = 'figures/'):
     all_particle_trace_dir = output_dir+'/particle_traces'
@@ -156,7 +120,7 @@ def plot_activated_fraction_mean_SS(avg_SS, output_dir,plot_dir = 'figures/'):
         SS_thresh = SS
         particle_trace_dir = all_particle_trace_dir + '/avgSS_' + str(int(SS*1000)).zfill(6) +'/'
         particle_traces = run.read_particle_traces(particle_trace_dir)
-#        particle_traces = all_particle_traces[aa]
+        
         time, Dp, Tp, T, mixing_ratio, SS_env, SS_crit, Dp_crit, Ddry, kappa = run.unravel_particle_traces(particle_traces)
         Dp=np.exp(Dp)
         Ntot_t = np.zeros([len(time)])
@@ -164,18 +128,7 @@ def plot_activated_fraction_mean_SS(avg_SS, output_dir,plot_dir = 'figures/'):
         Nccn_t_tau0 = np.zeros([len(time)])
         Nccn_kohler_t = np.zeros([len(time)])
         mean_SS.append(np.mean(SS))
-        
-        
-        # for tt in range(len(time)): 
-        #     Ntot_t[tt] = len(Dp[:,tt])#sum(Dp[:,tt] < 1.)
-        #     Nccn_t[tt] = sum(Dp[:,tt]>=Dp_crit) #(Dp[:,tt] <1.) & (Dp[:,tt] >= Dp_crit))
-        #     Nccn_kohler_t[tt] = sum(SS_crit <= SS_thresh)#sum((Dp[:,tt] < 1.) & (SS_crit <= SS_thresh))
-        #     Nccn_t_tau0[tt] = sum(SS_crit <= (SS_env[:,tt]+SS))
-        # N_tot.append(Ntot_t)
-        # N_ccn.append(Nccn_t)
-        # N_ccn_kohler.append(Nccn_kohler_t)
-        # N_ccn_tau0.append(Nccn_t_tau0)
-        
+
         N0 = 1.
         Ns = np.zeros(Dp.shape)
         wps = np.zeros(Dp.shape)
@@ -188,9 +141,9 @@ def plot_activated_fraction_mean_SS(avg_SS, output_dir,plot_dir = 'figures/'):
         plt.hist(Dp[:,-1],bins=Dp_bins,weights=Ns[:,-1]); plt.xscale('log'); plt.title(SS); plt.show();
         print(aa,SS)
         for tt in range(len(time)): 
-            Ntot_t[tt] = sum(Ns[:,tt]) #len(Dp[:,tt])#sum(Dp[:,tt] < 1.)
-            Nccn_t[tt] = sum(Ns[:,tt]*(Dp[:,tt]>=Dp_crit)) #sum(Dp[:,tt]>=Dp_crit) #(Dp[:,tt] <1.) & (Dp[:,tt] >= Dp_crit))
-            Nccn_kohler_t[tt] = sum(Ns[:,tt]*(SS_crit <= SS_thresh))#sum((Dp[:,tt] < 1.) & (SS_crit <= SS_thresh))
+            Ntot_t[tt] = sum(Ns[:,tt]) 
+            Nccn_t[tt] = sum(Ns[:,tt]*(Dp[:,tt]>=Dp_crit)) 
+            Nccn_kohler_t[tt] = sum(Ns[:,tt]*(SS_crit <= SS_thresh)) 
             Nccn_t_tau0[tt] = sum(Ns[:,tt]*(SS_crit <= (SS_env[:,tt]+SS)))
         N_tot.append(Ntot_t)
         N_ccn.append(Nccn_t)
@@ -204,27 +157,10 @@ def plot_activated_fraction_mean_SS(avg_SS, output_dir,plot_dir = 'figures/'):
     N_ccn_kohler = np.array(N_ccn_kohler)
     mean_SS = np.array(mean_SS)*100
     
-    # SS_mids_avg0,s_pdf = get_s_pdf(avg_SS=0.,LES_dir='/Users/fier887/OneDrive - PNNL/Documents/shared_files/ICLASS/LES/OUT_3D/')
-    # grid = plt.GridSpec(9,3,hspace=0.4)
-    # fig = plt.figure()
-    # ax = fig.add_subplot(grid[3:,:])
-    # ax1 = fig.add_subplot(grid[0,:])
-    # ax2 = fig.add_subplot(grid[1,:])
-    # ax3 = fig.add_subplot(grid[2,:])
-    # fig.set_size_inches(3.5,3.5)
-    
-    # ax1.plot(SS_mids_avg0-2.,s_pdf)
-    # ax2.plot(SS_mids_avg0,s_pdf)
-    # ax3.plot(SS_mids_avg0+2.,s_pdf)
-    
-    #plt.legend(loc='upper left')    
     fig, ax = plt.subplots(1,1)
     hln_uniform, = ax.plot(np.array([min(mean_SS),np.mean(SS_crit*100.),np.mean(SS_crit*100.),max(mean_SS)]),np.array([0.,0.,1.,1.]),color='C1',linewidth=3.)    
     hln_variable, = ax.plot(mean_SS,(N_ccn/N_tot)[:,len(time)-1],linewidth=2.,color='C2')
     hln_tau0, = ax.plot(mean_SS,(N_ccn_tau0/N_tot)[:,len(time)-1],linestyle='--',linewidth=2.,color='C2')
-    # ax.plot(mean_SS,(N_ccn_kohler/N_tot)[:,len(time)-1],linestyle='--',linewidth=2.,color='C1')
-    
-    # ax.plot(mean_SS,(N_ccn_kohler/N_tot)[:,len(time)-1],linestyle='--',linewidth=2.,color='C1')
     
     fig.set_size_inches(3.5,2.5)
     
@@ -234,9 +170,6 @@ def plot_activated_fraction_mean_SS(avg_SS, output_dir,plot_dir = 'figures/'):
     ax.set_xlim([-4.,3.])
     ax.set_ylim([0.,1.001])
     ax.legend([hln_variable,hln_tau0,hln_uniform],['turbulent','$\\tau_{\mathrm{evap}}=0$','uniform'],fontsize=10,loc='upper left',handletextpad=0.5)
-    # ax1.set_xlim([-4.,3.])
-    # ax2.set_xlim([-4.,3.])
-    # ax3.set_xlim([-4.,3.])
     
     filename = plot_dir + '/activated_fraction_mean_SS.png'
     plt.tight_layout()
@@ -269,7 +202,6 @@ def get_nonoverlapping_xy(N_samples,r_closest=0.1):
     while len(xs) < N_samples:
         x = np.random.uniform()
         y = np.random.uniform()
-        # r = np.hstack([xs/2.,ys/2.,(1-xs)/2.,(1-ys)/2.,np.sqrt((xs-x)**2 + (ys-y)**2)])
         r = np.hstack([np.sqrt((xs-x)**2 + (ys-y)**2)])
         if all(r>r_closest):
             xs = np.append(xs,x)
@@ -277,13 +209,13 @@ def get_nonoverlapping_xy(N_samples,r_closest=0.1):
     return xs, ys
 
 def plot_activated_fraction_mean_SS__with_particles(avg_SS,output_dir,plot_dir = 'figures/',ss_plot = [-0.03,0],tt_plot=-1,N_particles=30,r_closest=0.1,droplets_above=True):
-    # all_particle_trace_dir = output_dir+'/particle_traces'
+    
     all_particle_trace_dir_uniform = output_dir+'/particle_traces_uniformS'
     
     all_particle_trace_dir = output_dir + '../output_LagrangeDroplets_old/particle_traces'
     
     fig = plt.figure(constrained_layout=True)
-    # fig.set_size_inches(7.,2.5)
+    
     fig.set_size_inches(3.5,5.)
     plt.show()
     nrows = 3
@@ -305,20 +237,15 @@ def plot_activated_fraction_mean_SS__with_particles(avg_SS,output_dir,plot_dir =
     ax_particles = np.array(ax_particles)
     if droplets_above:
         ax = fig.add_subplot(gs[2:,:])
-        # ax_leg = fig.add_subplot(gs[:2,-1])
     else:
         ax = fig.add_subplot(gs[:-2,:])
-        # ax_leg = fig.add_subplot(gs[-2:,-1])
-
-
-
-    
+        
     N_tot = []
     N_ccn = []
     N_ccn_kohler = []
     N_ccn_tau0 = []
     mean_SS = []
-    # Dp_bins = np.logspace(-7,-4,100);
+    
     jj = 0
     col_inactive = np.array([106, 106, 106])/255.#np.array([212, 213, 214])/255.#np.array([181, 5, 2])/255.#
     edge_col_inactive = np.array([0.,0.,0.])#np.array([59, 60, 61])/255.
@@ -365,15 +292,7 @@ def plot_activated_fraction_mean_SS__with_particles(avg_SS,output_dir,plot_dir =
                 Dp_uniform_all=np.exp(Dp_uniform_all)
             Dp_uniform[jj] = Dp_uniform_all[tt_plot]
             frac_aerosol_uniform[jj] = Ddry_uniform**3/Dp_uniform_all[tt_plot]**3
-            # Dp_uniform[jj] = get_Dwet(particle_traces_uniform[0]['props']['Ddry'], particle_traces_uniform[0]['props']['kappa'], (100+SS)/100., np.mean(particle_traces_uniform[0]['traces']['T']))
             print('aa',aa,'SS',SS,'Dp_uniform[jj]',Dp_uniform[jj])
-            # if SS == min(ss_plot):
-            #     Dwet_low = get_Dwet(particle_traces_uniform[0]['props']['Ddry'], particle_traces_uniform[0]['props']['kappa'], (100+SS)/100., np.mean(particle_traces_uniform[0]['traces']['T']))
-            #     print('aa',aa,'SS',SS,'Dwet_low',Dwet_low)
-            # else:
-            #     Dwet_crit = get_Dwet(particle_traces_uniform[0]['props']['Ddry'], particle_traces_uniform[0]['props']['kappa'], (100+SS)/100., np.mean(particle_traces_uniform[0]['traces']['T']))#particle_traces[0]['props']['Dp_crit']
-            #     print('aa',aa,'SS',SS,'Dwet_crit',Dwet_crit)
-#        particle_traces = all_particle_traces[aa]
         time, Dp, Tp, T, mixing_ratio, SS_env, SS_crit, Dp_crit, Ddry, kappa = run.unravel_particle_traces(particle_traces)
         Dp=np.exp(Dp)
         Ntot_t = np.zeros([len(time)])
@@ -383,18 +302,14 @@ def plot_activated_fraction_mean_SS__with_particles(avg_SS,output_dir,plot_dir =
         mean_SS.append(np.mean(SS))
         
         for tt in range(len(time)): 
-            Ntot_t[tt] = len(Dp[:,tt])#sum(Dp[:,tt] < 1.)
-            Nccn_t[tt] = sum(Dp[:,tt]>=Dp_crit) #(Dp[:,tt] <1.) & (Dp[:,tt] >= Dp_crit))
-            Nccn_kohler_t[tt] = sum(SS_crit <= SS)#sum((Dp[:,tt] < 1.) & (SS_crit <= SS_thresh))
+            Ntot_t[tt] = len(Dp[:,tt]) 
+            Nccn_t[tt] = sum(Dp[:,tt]>=Dp_crit) 
+            Nccn_kohler_t[tt] = sum(SS_crit <= SS)
             Nccn_t_tau0[tt] = sum(SS_crit <= (SS_env[:,tt]+SS))
         N_tot.append(Ntot_t)
         N_ccn.append(Nccn_t)
         N_ccn_kohler.append(Nccn_kohler_t)
         N_ccn_tau0.append(Nccn_t_tau0)
-        
-        # run.one_particle(dry_diameter, kappa, density, N, parcel_filename, 
-                         # avg_SS=avg_SS, ignore_Tp=True, odesystem_type='linear', smooth=True, run_as_avg=False, tau0=False)
-        # print(aa,SS)
         
         print('SS',SS,'SS in ss_plot',SS in ss_plot)
         if SS in ss_plot:
@@ -416,10 +331,7 @@ def plot_activated_fraction_mean_SS__with_particles(avg_SS,output_dir,plot_dir =
                     cols[ii,:] = col_inactive
                     edge_cols[ii,:] = edge_col_inactive
             hscat_uniform = ax_particles[0,jj].scatter(xs,ys,np.ones(N_particles)*Dp_uniform[jj]*multiplier,cols_uniform,edgecolors=edge_cols_uniform,linewidth=0.25)
-            # if SS == min(ss_plot):
-            #     ax_particles[0,jj].scatter(xs,ys,np.ones(N_particles)*Dwet_low*multiplier)
-            # else:
-            #     ax_particles[0,jj].scatter(xs,ys,np.ones(N_particles)*Dwet_crit*multiplier)
+            
             ax_particles[1,jj].scatter(xs,ys,Dp[these_particles,tt_plot]*multiplier,cols,edgecolors=edge_cols,linewidth=0.2)
             print('aa',aa,'SS',SS,'mean Dp',np.mean(Dp[:,tt_plot]),'gm Dp',np.exp(np.mean(np.log(Dp[:,tt_plot]))))
             ax_particles[0,jj].set_xticks([])
@@ -487,29 +399,14 @@ def plot_activated_fraction_mean_SS__with_particles(avg_SS,output_dir,plot_dir =
     
     ss_ticks = np.arange(-4.,3.)
     ax.set_xticks([int(ss_tick) for ss_tick in ss_ticks])
-    ax.set_xticklabels([str(int(ss_tick))+'%' for ss_tick in ss_ticks])    
-    # ax.set_xticklabels([str(int(s_percent)) + '%' for s_percent in ss_plot*100.])
+    ax.set_xticklabels([str(int(ss_tick))+'%' for ss_tick in ss_ticks])
+    
     ax.legend(
         [hln_uniform,hln_variable,hln_tau0],
         ['uniform $s$','with turbulent\nfluctuations in $s$','with fluctuations\nbut $\\tau_{\mathrm{evap}}=0$'],
         frameon=False,fontsize=9,loc='upper left',handletextpad=0.5)
-    # ax1.set_xlim([-4.,3.])
-    # ax2.set_xlim([-4.,3.])
-    # ax3.set_xlim([-4.,3.])
     
-    # lgnd = ax_leg.legend([*hscat_uniform.legend_elements("sizes", num=3),*hscat_uniform.legend_elements("colors",num=2)],leg_strs,loc="upper left", fontsize=10)
-    # lgnd = ax_leg.legend([hscat_uniform,hscat_uniform,hscat_uniform,hscat_uniform,hscat_uniform],leg_strs,loc="upper left", fontsize=10)
-    
-    # # lgnd = ax_leg.legend([hscat_uniform]*len(leg_strs),leg_strs,loc="upper left", fontsize=10)
-    
-    # for (handle,maker_size,marker_col,marker_edgecol) in zip([*hscat_uniform.legend_elements("sizes", num=3),*hscat_uniform.legend_elements("colors",num=2)],marker_sizes,marker_cols,marker_edgecols):
-    #     print(handle,maker_size,marker_col,marker_edgecol)
-    #     handle.set_sizes(maker_size)
-    #     handle.set_markerfacecolor(marker_col)
-    #     handle.set_markeredgecolor(marker_edgecol)        
-    # ax_leg.get_xaxis().set_visible(False)
-    # ax_leg.get_yaxis().set_visible(False)
-    filename = plot_dir + '/activated_fraction_mean_SS.png'
+    filename = plot_dir + '/activated_fraction_mean_SS.pdf'
     plt.tight_layout()
     fig.patch.set_alpha(0.)
     fig.savefig(filename,dpi=1000)
