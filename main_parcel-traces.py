@@ -3,12 +3,12 @@
 """
 Created on Thu Jul 21 10:08:26 2022
 
-@author: fier887
+@author: Laura Fierce
 """
 
 import parcels
 import run
-# import process
+
 import numpy as np
 import time
 
@@ -21,20 +21,13 @@ avg_SS = np.linspace(-0.04,0.05,19) # np.linspace(-0.03, 0.03, 3) #supersaturati
 N = 1e6 # number concentration, #/m^3
 dry_diameter = 0.130e-6 # dry diameter, # m
 kappa = 1.0 # 0.65 better? Hygroscopiscity
-# density = 1000. # aerosol density, kg/m^3
-# ================================================
-LES_dir ='/pic/projects/sooty2/fierce/OUT_3D/'
-# LES_dir = '/project/projectdirs/m4086/mikhailo/SAM6.10.6_pi/OUT_3D/'
-#'/Users/fier887/OneDrive - PNNL/Documents/shared_files/ICLASS/LES/OUT_3D/'#'OUT_3D/'
-parcel_trace_dir = '/pic/projects/sooty2/fierce/output_LagrangeDroplets/parcel_traces/'
-all_particle_trace_dir = '/pic/projects/sooty2/fierce/output_LagrangeDroplets/particle_traces/'
-plot_dir = '/pic/projects/sooty2/fierce/output_LagrangeDroplets/figures/'
 
-# LES_dir ='/Users/fier887/OneDrive - PNNL/Documents/shared_files/ICLASS/LES/OUT_3D/'#'/pic/projects/sooty2/fierce/OUT_3D/'
-# #'/Users/fier887/OneDrive - PNNL/Documents/shared_files/ICLASS/LES/OUT_3D/'#'OUT_3D/'
-# parcel_trace_dir = '../parcel_traces/'#'/pic/projects/sooty2/fierce/output_LagrangeDroplets/parcel_traces/'
-# all_particle_trace_dir = '../particle_traces/'#'/pic/projects/sooty2/fierce/output_LagrangeDroplets/particle_traces/'
-# plot_dir = '../figures/'#'/pic/projects/sooty2/fierce/output_LagrangeDroplets/figures/'
+# ================================================
+LES_dir ='LES/'
+parcel_trace_dir = 'parcel_traces/'
+all_particle_trace_dir = 'particle_traces/'
+plot_dir = 'figs/'
+
 start_time = time.time()
 timesteps = np.linspace(90000,180000,3601)
 run.make_directories(
