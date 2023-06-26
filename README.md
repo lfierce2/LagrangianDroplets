@@ -13,7 +13,7 @@ Anderson, J.C., Beeler, P., Ovchinnikov, M., Cantrell, W., Krueger, S., Shaw, R.
 
 ## Instructions
 
-1. Download large eddy simulation output by clicking [here](https://drive.google.com/uc?export=download&id=1Re3eaTykUBG1KeAfHIycxKJL61AedKda).
+1. Download large eddy simulation output by clicking [here](https://portal.nersc.gov/project/m1657/LagrangianDroplets/).
 2. Clone repository
 3. Open main.py
 4. Ensure that the working directory contains main.py, microphysics.py, parcels.py, process.py, and run.py 
