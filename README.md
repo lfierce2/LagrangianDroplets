@@ -15,7 +15,7 @@ Anderson, J.C., Beeler, P., Ovchinnikov, M., Cantrell, W., Krueger, S., Shaw, R.
 
 ## Instructions
 
-1. Download large eddy simulation output by clicking [here](https://portal.nersc.gov/project/m1657/LagrangianDroplets/).
+1. Download large eddy simulation output, which is provided [here](https://portal.nersc.gov/project/m1657/LagrangianDroplets/).
 2. Clone repository
 3. Open main.py
 4. Ensure that the working directory contains main.py, microphysics.py, parcels.py, process.py, and run.py 
@@ -69,4 +69,4 @@ Anderson, J.C., Beeler, P., Ovchinnikov, M., Cantrell, W., Krueger, S., Shaw, R.
      * Plot is saved in "/figures"
 
 ## License
-See the LICENSE file for license rights and limitations (GNU).
+See the [LICENSE](https://github.com/lfierce2/LagrangianDroplets/blob/main/LICENSE.md) file for license rights and limitations (GNU).
