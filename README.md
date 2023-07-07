@@ -6,6 +6,7 @@
 
 Anderson, J.C., Beeler, P., Ovchinnikov, M., Cantrell, W., Krueger, S., Shaw, R.A., Yang, F. and Fierce, L., 2022. Enhancements in cloud condensation nuclei concentrations from turbulent fluctuations in supersaturation. arXiv preprint arXiv:2210.15766.
 
+current version: 1.0.0
 
 ## Dependencies
 
