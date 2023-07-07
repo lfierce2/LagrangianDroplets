@@ -67,3 +67,6 @@ Anderson, J.C., Beeler, P., Ovchinnikov, M., Cantrell, W., Krueger, S., Shaw, R.
    * process.plot_activated_fraction_mean_SS
      * Plots activated fraction as a function of average supersaturation.
      * Plot is saved in "/figures"
+
+## License
+See the LICENSE file for license rights and limitations (GNU).
