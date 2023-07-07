@@ -1,4 +1,6 @@
 # Particle-based model of turbulent microphysics in the MTU Pi Chamber
+[![DOI](https://zenodo.org/badge/542801260.svg)](https://zenodo.org/badge/latestdoi/542801260)
+
   * Models fluctuations in temperature and supersaturation due to turbulent flow within clouds.
   * Calculates droplet growth and cloud droplet activation of aerosol particles exposed to turbulent flow.
 
@@ -65,4 +67,3 @@ Anderson, J.C., Beeler, P., Ovchinnikov, M., Cantrell, W., Krueger, S., Shaw, R.
    * process.plot_activated_fraction_mean_SS
      * Plots activated fraction as a function of average supersaturation.
      * Plot is saved in "/figures"
-
