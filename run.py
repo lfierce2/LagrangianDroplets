@@ -23,7 +23,10 @@ def make_directories(avg_SS,parcel_trace_dir='parcel_traces/',all_particle_trace
     
     if not os.path.exists(all_particle_trace_dir):
         os.mkdir(all_particle_trace_dir)
-        
+
+    if not os.path.exists(all_particle_trace_dir_uniformS):
+        os.mkdir(all_particle_trace_dir_uniformS)
+    
     if not os.path.exists(plot_dir):
         os.mkdir(plot_dir)
     
